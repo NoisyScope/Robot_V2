@@ -23,9 +23,11 @@ def midpoint(ptA, ptB):
 # args = vars(ap.parse_args())
 
 # load the image, convert it to grayscale, and blur it slightly
+cv2.namedWindow("output", cv2.WINDOW_NORMAL) ##Ventana con libertad de dimensiones
+cv2.resizeWindow("output", 531, 772)  
 image = cv2.imread('frame0.png')
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-gray = cv2.GaussianBlur(gray, (5, 5), 0)
+gray = cv2.GaussianBlur(gray, (7, 7), 0)
 # perform edge detection, then perform a dilation + erosion to
 
 # close gaps in between object edges
@@ -98,5 +100,5 @@ for c in cnts:
 		(int(trbrX + 10), int(trbrY)), cv2.FONT_HERSHEY_SIMPLEX,
 		0.65, (255, 255, 255), 2)
 	# show the output image
-	cv2.imshow("Image", orig)
+	cv2.imshow("output", orig)
 	cv2.waitKey(0)
