@@ -14,6 +14,9 @@ RDK = robolink.Robolink()
 
 
 # Program example:
-time.sleep(3)
+time.sleep(2)
 print('El valor de la altura es: ',visiontest.height)
 print('El valor del ancho es: ',visiontest.width)
+time.sleep(2)
+print('Intentando correr programa')
+RDK.RunCode('adelante',True)
