@@ -4,18 +4,16 @@
 # Reference:     https://robodk.com/doc/en/PythonAPI/robodk.html
 # Note: It is not required to keep a copy of this file, your Python script is saved with your RDK project
 import time
-
-from visiontest import *
-import takepic
+import visiontest
 from robodk import robolink    # RoboDK API
 from robodk import robomath    # Robot toolbox
 RDK = robolink.Robolink()
 
 # Link to RoboDK
-
 # RDK = Robolink()
 
 
 # Program example:
-vision()
-time.sleep(2)
+time.sleep(3)
+print('El valor de la altura es: ',visiontest.height)
+print('El valor del ancho es: ',visiontest.width)
