@@ -15,11 +15,13 @@ RDK = robolink.Robolink()
 
 # Program example:
 time.sleep(2)
-altura = visiontest.height * 25.4
-print('Longitud: ',altura)
+print('height',visiontest.height)# visiontest.heigt ya esta convertido a cm
 
 
-if (altura <= 30.0):
+
+
+
+if (visiontest.height <= 30.0):
     time.sleep(2)
     print('Cumpliendo condicion 1')
     RDK.RunCode('adelante',True)
