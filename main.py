@@ -15,8 +15,16 @@ RDK = robolink.Robolink()
 
 # Program example:
 time.sleep(2)
-print('El valor de la altura es: ',visiontest.height)
-print('El valor del ancho es: ',visiontest.width)
-time.sleep(2)
-print('Intentando correr programa')
-RDK.RunCode('adelante',True)
+altura = visiontest.height * 25.4
+print('Longitud: ',altura)
+
+
+if (altura <= 30.0):
+    time.sleep(2)
+    print('Cumpliendo condicion 1')
+    RDK.RunCode('adelante',True)
+else:
+    print('Cumpliendo condicion 2')
+    RDK.RunCode('atras',True)
+
+
