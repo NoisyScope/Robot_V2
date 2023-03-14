@@ -24,9 +24,9 @@ print('height',visiontest.height)# visiontest.heigt ya esta convertido a cm
 if (visiontest.height <= 30.0):
     time.sleep(2)
     print('Cumpliendo condicion 1')
-    RDK.RunCode('adelante',True)
+    RDK.RunCode('rutinac1',True)
 else:
     print('Cumpliendo condicion 2')
-    RDK.RunCode('atras',True)
+    RDK.RunCode('rutinac1',True)
 
 

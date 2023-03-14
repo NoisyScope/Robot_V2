@@ -25,10 +25,13 @@ def midpoint(ptA, ptB):
 
 # load the image, convert it to grayscale, and blur it slightly
 cv2.namedWindow("output", cv2.WINDOW_NORMAL) ##Ventana con libertad de dimensiones
-cv2.resizeWindow("output", 531, 772)  
+cv2.resizeWindow("output", 1920, 1080)
 image = cv2.imread('frame0.png')
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 gray = cv2.GaussianBlur(gray, (7, 7), 0)
+#cv2.rectangle(gray,(0,0),(505,1080),(0,0,0),thickness = -1)
+#cv2.rectangle(gray,(1267,0),(1920,1080),(0,0,0),thickness = -1)
+
 # perform edge detection, then perform a dilation + erosion to
 
 # close gaps in between object edges
@@ -89,7 +92,7 @@ for c in cnts:
 	# compute it as the ratio of pixels to supplied metric
 	# (in this case, inches)
 	if pixelsPerMetric is None:
-		pixelsPerMetric = dB / 2   #REFERENCE OBJECT DIMENSIONS
+		pixelsPerMetric = dB / 1.73   #REFERENCE OBJECT DIMENSIONS
 	# compute the size of the object
 	dimA = dA / pixelsPerMetric
 	dimB = dB / pixelsPerMetric
