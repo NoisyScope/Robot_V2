@@ -34,4 +34,41 @@ edged = cv2.Canny(gray, 50, 100)
 edged = cv2.dilate(edged, None, iterations=1)
 edged = cv2.erode(edged, None, iterations=1)
 ```
+Nextly, we have to find the contours in the edge map which then will be followed by sorting the contours from left-to-right and initializing the 'pixels per metric' calibration variable
+ ```
+ cnts = cv2.findContours(edged.copy(), cv2.RETR_EXTERNAL,
+	cv2.CHAIN_APPROX_SIMPLE)
+cnts = imutils.grab_contours(cnts)
+(cnts, _) = contours.sort_contours(cnts)
+pixelsPerMetric = None
+ ```
+Then, we will start the grind (the code will, so don't worry too much). The code wil loop through every contour individually in order to draw an outline of the shape we are measuring. ***Important note:*** , we will need a reference object on the top-left of the image in order to calibrate the camera. In this case it is a known-size green circle. 
 
+The next step consist of creating a rectangle which encapsulates the already connected contours of the image, followed by calculating the midpoints of the rectangle. Then, it will be pixel measured based on the last circle reference, which will include the correct pixel-to-metric conversion.
+```
+	for (x, y) in box:
+		cv2.circle(orig, (int(x), int(y)), 5, (0, 0, 255), -1)
+    	(tl, tr, br, bl) = box
+	    (tltrX, tltrY) = midpoint(tl, tr)
+	    (blbrX, blbrY) = midpoint(bl, br)
+      (tlblX, tlblY) = midpoint(tl, bl)
+	    (trbrX, trbrY) = midpoint(tr, br)
+```
+We will use the Euclidean distance between the midpoints in order to make the pixel-to-metric conversion.
+```
+	dA = dist.euclidean((tltrX, tltrY), (blbrX, blbrY))
+	dB = dist.euclidean((tlblX, tlblY), (trbrX, trbrY))
+```
+Finally, we will display the rectangles, midpoints and the metric calculated distances over the original image: `"frame0.png"` and output the height of the last measured distance `"height"` to our `main.py` code.
+### main.py
+This is the final step, as well as the only code the user will need to interact with. This is because this code will call the last explained programs in order to simplify code structure and debugging.
+The second statement imports our `visiontest.py` program and runs it as a secondary function. Next, we will create a delay between the finalization of the previous code in order to properly extract the `"height"` variable and printing it.
+
+Finally, parting from RoboDK API we will run the following statement:
+```
+RDK.RunCode('final',True)
+```
+This will initialize any program contained in our RoboDK environment containing the name: 'final' and will try to run it. If the condition is satisfied, we will see our RoboDK program starting it's programmed routine.
+
+## Further implementation
+In order to complete and further develop this project, we could split the complete robot's code in mid stages in the ability of being able to call them individually. This will let us maintain the same elemental routine and be able to modify the shoe routes in order to select through a database the proper one. Taking this one step further, we could implement a deep learning computer analysis in order to identify the type of object which is shown to the camera along adaptative messages which will inform the end-user about the shoe's condition, alignment and colour in order to imporoving the experience through the machine.
