@@ -26,7 +26,7 @@ gray = cv2.GaussianBlur(gray, (7, 7), 0)
 cv2.rectangle(gray,(0,0),(129,480),(0,0,0),thickness = -1)		#This figures will reduce the computing area
 cv2.rectangle(gray,(460,0),(640,480),(0,0,0),thickness = -1)
 cv2.circle(gray,(332,360),40,(0,0,0),thickness=-1)
-cv2.imshow('Previo',gray)
+cv2.imshow('Preview',gray)
 
 # perform edge detection, then perform a dilation + erosion to close gaps in between object edges
 edged = cv2.Canny(gray, 50, 100)
@@ -54,7 +54,7 @@ for c in cnts:
 	box = cv2.cv.BoxPoints(box) if imutils.is_cv2() else cv2.boxPoints(box)
 	box = np.array(box, dtype="int")
 	# order the points in the contour such that they appear
-	# in top-left, top-right, bottom-right, and bottom-left
+	# in top-left, top-right, bottom-right, and bottom-left	
 	# order, then draw the outline of the rotated bounding
 	# box
 	box = perspective.order_points(box)
