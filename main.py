@@ -17,16 +17,8 @@ RDK = robolink.Robolink()
 time.sleep(2)
 print('height',visiontest.height)# visiontest.heigt ya esta convertido a cm
 
+time.sleep(2)
+RDK.RunCode('final',True)
 
-
-
-
-if (visiontest.height <= 30.0):
-    time.sleep(2)
-    print('Cumpliendo condicion 1')
-    RDK.RunCode('rutinac1',True)
-else:
-    print('Cumpliendo condicion 2')
-    RDK.RunCode('rutinac1',True)
 
 
