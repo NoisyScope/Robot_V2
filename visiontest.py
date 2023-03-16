@@ -15,37 +15,34 @@ takepic.camera()
 def midpoint(ptA, ptB):
 	return ((ptA[0] + ptB[0]) * 0.5, (ptA[1] + ptB[1]) * 0.5)
 
-# construct the argument parse and parse the arguments
-# ap = argparse.ArgumentParser()
-# ap.add_argument("-i", "--image", required=True,
-# 	help="path to the input image")
-# ap.add_argument("-w", "--width", type=float, required=True,
-# 	help="width of the left-most object in the image (in inches)")
-# args = vars(ap.parse_args())
+# Window with rescalable output (NOT NECESSARY IN THIS CASE)
+#cv2.namedWindow("output", cv2.WINDOW_NORMAL) 
+#cv2.resizeWindow("output", 1920, 1080)
 
-# load the image, convert it to grayscale, and blur it slightly
-cv2.namedWindow("output", cv2.WINDOW_NORMAL) ##Ventana con libertad de dimensiones
-cv2.resizeWindow("output", 1920, 1080)
+# Reading image and pre-processing it
 image = cv2.imread('frame0.png')
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 gray = cv2.GaussianBlur(gray, (7, 7), 0)
-#cv2.rectangle(gray,(0,0),(505,1080),(0,0,0),thickness = -1)
-#cv2.rectangle(gray,(1267,0),(1920,1080),(0,0,0),thickness = -1)
+cv2.rectangle(gray,(0,0),(129,480),(0,0,0),thickness = -1)		#This figures will reduce the computing area
+cv2.rectangle(gray,(460,0),(640,480),(0,0,0),thickness = -1)
+cv2.circle(gray,(332,360),40,(0,0,0),thickness=-1)
+cv2.imshow('Previo',gray)
 
-# perform edge detection, then perform a dilation + erosion to
-
-# close gaps in between object edges
+# perform edge detection, then perform a dilation + erosion to close gaps in between object edges
 edged = cv2.Canny(gray, 50, 100)
 edged = cv2.dilate(edged, None, iterations=1)
 edged = cv2.erode(edged, None, iterations=1)
+
 # find contours in the edge map
 cnts = cv2.findContours(edged.copy(), cv2.RETR_EXTERNAL,
 	cv2.CHAIN_APPROX_SIMPLE)
 cnts = imutils.grab_contours(cnts)
+
 # sort the contours from left-to-right and initialize the
 # 'pixels per metric' calibration variable
 (cnts, _) = contours.sort_contours(cnts)
 pixelsPerMetric = None
+
 # loop over the contours individually
 for c in cnts:
 	# if the contour is not sufficiently large, ignore it
