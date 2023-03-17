@@ -23,9 +23,9 @@ def midpoint(ptA, ptB):
 image = cv2.imread('frame0.png')
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 gray = cv2.GaussianBlur(gray, (7, 7), 0)
-cv2.rectangle(gray,(0,0),(129,480),(0,0,0),thickness = -1)		#This figures will reduce the computing area
-cv2.rectangle(gray,(460,0),(640,480),(0,0,0),thickness = -1)
-cv2.circle(gray,(320,360),40,(0,0,0),thickness=-1)
+#cv2.rectangle(gray,(0,0),(129,480),(0,0,0),thickness = -1)		#This figures will reduce the computing area
+#cv2.rectangle(gray,(460,0),(640,480),(0,0,0),thickness = -1)
+#cv2.circle(gray,(320,360),40,(0,0,0),thickness=-1)
 cv2.imshow('Preview',gray)
 
 # perform edge detection, then perform a dilation + erosion to close gaps in between object edges
