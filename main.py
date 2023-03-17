@@ -18,7 +18,16 @@ time.sleep(2)
 print('height',visiontest.height)# visiontest.heigt ya esta convertido a cm
 
 time.sleep(2)
-RDK.RunCode('final',True)
+if visiontest.height <= 26.0:
+    RDK.RunCode('final_ch',True)
+    print("Rutina zapato: ",visiontest.height)
+elif 26<visiontest.height<=28:
+    RDK.RunCode('final',True)
+else:
+    RDK.RunCode('final_gr',True)
+
+
+
 
 
 

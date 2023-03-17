@@ -94,8 +94,8 @@ for c in cnts:
 	dimA = dA / pixelsPerMetric
 	dimB = dB / pixelsPerMetric
 	# convert to metric units
-	height = dimA * 2.54
-	width =  dimB * 2.54
+	height = int(dimA * 2.54)
+	width =  int(dimB * 2.54)
 	# draw the object sizes on the image
 	cv2.putText(orig, "{:.1f}in".format(dimA),
 		(int(tltrX - 15), int(tltrY - 10)), cv2.FONT_HERSHEY_SIMPLEX,
