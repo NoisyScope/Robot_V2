@@ -92,6 +92,8 @@ for c in cnts:
 	if pixelsPerMetric is None:
 		pixelsPerMetric = dB / 1.73   #REFERENCE OBJECT DIMENSIONS
 	# compute the size of the object
+	if keyboard.is_pressed('f'):
+		break
 	measurements = []
 	dimA = dA / pixelsPerMetric
 	dimB = dB / pixelsPerMetric
@@ -99,8 +101,6 @@ for c in cnts:
 	# convert to metric units
 	height = int(dimA * 2.54)
 	width =  int(dimB * 2.54)
-	if keyboard.is_pressed('f'):
-		break
 	# draw the object sizes on the image
 	cv2.putText(orig, "{:.1f}in".format(dimA),
 		(int(tltrX - 15), int(tltrY - 10)), cv2.FONT_HERSHEY_SIMPLEX,
