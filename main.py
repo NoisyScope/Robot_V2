@@ -23,8 +23,10 @@ if visiontest.height <= 26.0:
     print("Rutina zapato: ",visiontest.height)
 elif 26<visiontest.height<=28:
     RDK.RunCode('final',True)
+    print("Rutina zapato: ",visiontest.height)
 else:
     RDK.RunCode('final_gr',True)
+    print("Rutina zapato: ",visiontest.height)
 
 
 
