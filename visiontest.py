@@ -7,6 +7,8 @@ import argparse
 import imutils
 import cv2
 import takepic
+import keyboard
+
 
 
 # call the program in order to take a picture
@@ -23,9 +25,9 @@ def midpoint(ptA, ptB):
 image = cv2.imread('frame0.png')
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 gray = cv2.GaussianBlur(gray, (7, 7), 0)
-cv2.rectangle(gray,(0,0),(129,480),(0,0,0),thickness = -1)		#This figures will reduce the computing area
-cv2.rectangle(gray,(460,0),(640,480),(0,0,0),thickness = -1)
-cv2.circle(gray,(320,360),40,(0,0,0),thickness=-1)
+cv2.rectangle(gray,(0,0),(115,480),(0,0,0),thickness = -1)		#This figures will reduce the computing area
+cv2.rectangle(gray,(445,0),(640,480),(0,0,0),thickness = -1)
+cv2.circle(gray,(290,360),60,(0,0,0),thickness=-1)
 cv2.imshow('Preview',gray)
 
 # perform edge detection, then perform a dilation + erosion to close gaps in between object edges
@@ -87,15 +89,18 @@ for c in cnts:
 	dB = dist.euclidean((tlblX, tlblY), (trbrX, trbrY))
 	# if the pixels per metric has not been initialized, then
 	# compute it as the ratio of pixels to supplied metric
-	# (in this case, inches)
 	if pixelsPerMetric is None:
 		pixelsPerMetric = dB / 1.73   #REFERENCE OBJECT DIMENSIONS
 	# compute the size of the object
+	measurements = []
 	dimA = dA / pixelsPerMetric
 	dimB = dB / pixelsPerMetric
+	measurements.append(dimA)
 	# convert to metric units
 	height = int(dimA * 2.54)
 	width =  int(dimB * 2.54)
+	if keyboard.is_pressed('f'):
+		break
 	# draw the object sizes on the image
 	cv2.putText(orig, "{:.1f}in".format(dimA),
 		(int(tltrX - 15), int(tltrY - 10)), cv2.FONT_HERSHEY_SIMPLEX,
@@ -105,5 +110,8 @@ for c in cnts:
 		0.65, (255, 255, 255), 2)
 	# show the output image
 	cv2.imshow("output", orig)
+	print(measurements)
+	
+
 
 	cv2.waitKey(0)
