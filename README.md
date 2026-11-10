@@ -1,10 +1,43 @@
-# Robot_V2
-This project consist of a program who can identify the size of a shoe through computer vision and start a routine in RoboDK for a shoe cleaning procedure.
+# Vision-Guided Robotic Shoe Cleaning Cell (RoboDK + OpenCV)
 
-[Showcase video](https://youtu.be/L6wCy-ENGeg)
+![Python](https://img.shields.io/badge/Python-3.10-3776AB?logo=python&logoColor=white)
+![OpenCV](https://img.shields.io/badge/OpenCV-4.x-5C3EE8?logo=opencv&logoColor=white)
+![RoboDK](https://img.shields.io/badge/RoboDK-API-F7931E)
+![License](https://img.shields.io/badge/license-MIT-green)
 
+A simulated industrial cell in which a **FANUC LR Mate 200iD/7L** cleans shoes of different sizes.
+A camera measures the shoe with classical computer vision (Canny edges, contour bounding boxes and a
+reference-object pixels-per-metric calibration), and the measured length selects one of three
+robot routines in RoboDK through its Python API.
 
-[Showcase video with EDM music](https://youtu.be/9FuHWFlsXtw)
+▶ [Demo video](https://youtu.be/L6wCy-ENGeg) · [Demo video (with music)](https://youtu.be/9FuHWFlsXtw)
+
+## Pipeline
+
+```
+takepic.py ──► visiontest.py ───────────────────────────────► main.py ──► RoboDK
+ (capture)     grayscale → blur → mask → Canny → dilate/erode   length ≤ 26 cm → final_ch
+               → contours → min-area box → px/cm from            26–28 cm      → final
+               reference circle → shoe length (cm)               > 28 cm       → final_gr
+```
+
+## Repository layout
+
+| Path | Purpose |
+|---|---|
+| `main.py` | Entry point: runs the measurement and triggers the matching RoboDK program |
+| `visiontest.py` | Size measurement from `frame0.png` |
+| `takepic.py` | Camera capture (SPACE to save, ESC to continue) |
+| `robodk/` | RoboDK stations (`reto.rdk`, left/right routes) and robot/gripper models |
+| `cad/` | STEP/STL models of the tooling, fixtures and work table |
+
+## Running
+
+```bash
+pip install opencv-python imutils scipy numpy keyboard robodk
+# open robodk/reto.rdk in RoboDK, then:
+python main.py   # opens the camera (takepic), measures, then runs the routine
+```
 
 ## System Explanation:
 The main.py code constructs parting from 2 elemental funcions ( visiontest.py  &  takepic.py ) which have the function of taking a picture of a selected COM device, processing it, start looking for contours in order to measure the size of an object and resulting in outputting the object's size as well as running a command in RoboDK which will result in a specific routine inicialization.
